@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DS Fashion LTD | Daily Fabrics Status</title>
+<title>DS Fashion LTD | Daily Fabric In House Status</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
@@ -25,7 +25,7 @@ h1{font-size:18px;margin:0}
 .brand small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
 h2{font-size:14px;margin:0 0 8px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:12px}
-.row{display:grid;grid-template-columns:1.2fr 1fr 1fr .85fr 28px;gap:5px;margin-bottom:6px;align-items:center}
+.row{display:grid;grid-template-columns:1.3fr 1fr .85fr 28px;gap:5px;margin-bottom:6px;align-items:center}
 .row.h{font-size:12px;color:var(--mut);font-weight:600}
 input{width:100%;min-width:0;padding:9px 6px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font-size:15px}
 input.n{text-align:center}
@@ -63,7 +63,7 @@ button.add{width:100%;border-style:dashed;color:var(--ac);font-weight:600;margin
 <body>
 <main>
 <header>
-  <div class="brand"><img id="hlogo" alt="DS Fashion LTD logo"><div><h1>DS Fashion LTD</h1><small>Daily Fabrics Status</small></div></div>
+  <div class="brand"><img id="hlogo" alt="DS Fashion LTD logo"><div><h1>DS Fashion LTD</h1><small>Daily Fabric In House Status</small></div></div>
   <button id="theme-btn" class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme"></button>
 </header>
 
@@ -146,25 +146,25 @@ if(savedTheme)applyTheme(savedTheme);else updateThemeUI(getActiveTheme());
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 
 /* Data: protiti row = Buyer, Style, Color, KG */
-const blank=()=>({b:'',s:'',c:'',k:''});
+const blank=()=>({b:'',s:'',k:''});
 const dflt=()=>({date:today(),r:Array.from({length:6},blank)});
 let S;
 try{S=JSON.parse(localStorage.getItem(K)||'null')}catch(e){}
 if(!S||!Array.isArray(S.r))S=dflt();
-S.r=S.r.map(x=>({b:x?.b||'',s:x?.s||'',c:x?.c||'',k:x?.k||''}));
+S.r=S.r.map(x=>({b:x?.b||'',s:x?.s||'',k:x?.k||''}));
 S.date=today();
 let opened=today();
 
 const num=s=>String(s||'').split('+').reduce((a,x)=>a+(parseFloat(x)||0),0);
 const fmt=n=>n?(+n.toFixed(2)).toLocaleString('en-IN'):'';
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const vis=r=>r.b||r.s||r.c||r.k;
+const vis=r=>r.b||r.s||r.k;
 function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
 
 function form(){
- $('rows').innerHTML='<div class="row h"><span>Buyer</span><span>Style</span><span>Color</span><span>KG</span><span></span></div>'+
+ $('rows').innerHTML='<div class="row h"><span>Buyer</span><span>Style</span><span>KG</span><span></span></div>'+
  S.r.map((r,i)=>'<div class="row">'+
-  ['b','s','c','k'].map(f=>`<input ${f=='k'?'class="n" ':''}data-i="${i}" data-f="${f}" value="${esc(r[f])}">`).join('')+
+  ['b','s','k'].map(f=>`<input ${f=='k'?'class="n" ':''}data-i="${i}" data-f="${f}" value="${esc(r[f])}">`).join('')+
   `<button class="x" onclick="del(${i})">✕</button></div>`).join('');
 }
 
@@ -189,10 +189,10 @@ function fd(d){const p=(d||'').split('-');return p.length==3?`${p[2]}/${p[1]}/${
 function draw(){
  const T=fmt(total())||'0';
  const rows=S.r.filter(vis);
- const body=(rows.length?rows:[blank()]).map(r=>`<tr><td>${esc(r.b)}</td><td>${esc(r.s)}</td><td>${esc(r.c)}</td><td><b>${fmt(num(r.k))}</b></td></tr>`).join('');
- $('report').innerHTML=`<div class="rh"><img src="${LOGO_SRC}" alt=""><h1>DS Fashion LTD</h1><div class="d"><small>Date</small><b>${fd(S.date)}</b></div></div><h3>Daily Fabrics Status</h3>
- <table><tr><th>Buyer</th><th>Style</th><th>Color</th><th>Total KG</th></tr>${body}
- <tr class="t"><td>Total</td><td></td><td></td><td>${T}</td></tr></table>
+ const body=(rows.length?rows:[blank()]).map(r=>`<tr><td>${esc(r.b)}</td><td>${esc(r.s)}</td><td><b>${fmt(num(r.k))}</b></td></tr>`).join('');
+ $('report').innerHTML=`<div class="rh"><img src="${LOGO_SRC}" alt=""><h1>DS Fashion LTD</h1><div class="d"><small>Date</small><b>${fd(S.date)}</b></div></div><h3>Daily Fabric In House Status</h3>
+ <table><tr><th>Buyer</th><th>Style</th><th>Total KG</th></tr>${body}
+ <tr class="t"><td>Total</td><td></td><td>${T}</td></tr></table>
  <div class="sum"><div>Total KG<b>${T}</b></div></div>`;
  save();
 }
@@ -211,8 +211,8 @@ document.addEventListener('visibilitychange',()=>{
 function cv(){
  const T=fmt(total())||'0',W=420,RH=24;
  const rows=S.r.filter(vis);
- const all=[['Buyer','Style','Color','Total KG'],...(rows.length?rows:[blank()]).map(r=>[r.b,r.s,r.c,fmt(num(r.k))]),['Total','','',T]];
- const f=[.28,.25,.25,.22];
+ const all=[['Buyer','Style','Total KG'],...(rows.length?rows:[blank()]).map(r=>[r.b,r.s,fmt(num(r.k))]),['Total','',T]];
+ const f=[.4,.33,.27];
  const H=108+all.length*RH+12+72;
  const c=document.createElement('canvas');c.width=W*2;c.height=H*2;
  const g=c.getContext('2d');g.scale(2,2);
@@ -223,7 +223,7 @@ function cv(){
  g.textAlign='right';g.fillStyle='#555';g.font='11px Inter,Arial,sans-serif';g.fillText('Date',W-16,30);
  g.fillStyle='#111';g.font='bold 15px Inter,Arial,sans-serif';g.fillText(fd(S.date),W-16,47);
  g.fillStyle='#0f766e';g.fillRect(16,72,W-32,3);
- g.textAlign='center';g.fillStyle='#111';g.font='bold 16px Inter,Arial,sans-serif';g.fillText('Daily Fabrics Status',W/2,92);
+ g.textAlign='center';g.fillStyle='#111';g.font='bold 16px Inter,Arial,sans-serif';g.fillText('Daily Fabric In House Status',W/2,92);
  const fit=(t,mw)=>{t=String(t);if(g.measureText(t).width<=mw)return t;while(t.length>1&&g.measureText(t+'…').width>mw)t=t.slice(0,-1);return t+'…'};
  let y=108;const w=W-32;
  all.forEach((row,ri)=>{
@@ -232,7 +232,7 @@ function cv(){
    const cw=w*f[ci];
    g.fillStyle=ri==0?'#e8eef0':ri==all.length-1?'#f3f3f3':'#fff';g.fillRect(x,y,cw,RH);
    g.strokeStyle='#333';g.lineWidth=1;g.strokeRect(x,y,cw,RH);
-   g.fillStyle='#111';g.font=(bold||ci==3?'bold ':'')+'13px Inter,Arial,sans-serif';
+   g.fillStyle='#111';g.font=(bold||ci==2?'bold ':'')+'13px Inter,Arial,sans-serif';
    g.textAlign=ci?'center':'left';g.fillText(fit(cell,cw-12),ci?x+cw/2:x+6,y+RH/2);
    x+=cw});
   y+=RH});
